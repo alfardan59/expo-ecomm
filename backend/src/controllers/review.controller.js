@@ -19,15 +19,11 @@ export async function createReview(req, res) {
     }
 
     if (order.clerkId !== user.clerkId) {
-      return res
-        .status(403)
-        .json({ error: "Not authorized to review this order" });
+      return res.status(403).json({ error: "Not authorized to review this order" });
     }
 
     if (order.status !== "delivered") {
-      return res
-        .status(400)
-        .json({ error: "Can only review delivered orders" });
+      return res.status(400).json({ error: "Can only review delivered orders" });
     }
 
     // verify product is in the order
@@ -36,17 +32,6 @@ export async function createReview(req, res) {
     );
     if (!productInOrder) {
       return res.status(400).json({ error: "Product not found in this order" });
-    }
-
-    //check if review already exists
-    const existingReview = await Review.findOne({
-      productId,
-      userId: user._id,
-    });
-    if (existingReview) {
-      return res
-        .status(400)
-        .json({ error: "You have already reviewed this product" });
     }
 
     // atomic update or create
@@ -80,7 +65,7 @@ export async function createReview(req, res) {
   }
 }
 
-export async function deleteReview(re, res) {
+export async function deleteReview(req, res) {
   try {
     const { reviewId } = req.params;
 
@@ -92,9 +77,7 @@ export async function deleteReview(re, res) {
     }
 
     if (review.userId.toString() !== user._id.toString()) {
-      return res
-        .status(403)
-        .json({ error: "Not authorized to delete this review" });
+      return res.status(403).json({ error: "Not authorized to delete this review" });
     }
 
     const productId = review.productId;
