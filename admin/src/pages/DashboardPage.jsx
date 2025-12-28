@@ -46,6 +46,7 @@ function DashboardPage() {
     <div className="space-y-6">
       {/* STATS */}
       <div className="stats stats-vertical lg:stats-horizontal shadow w-full bg-base-100">
+         
         {statsCards.map((stat) => (
           <div key={stat.name} className="stat">
             <div className="stat-figure text-primary">{stat.icon}</div>
