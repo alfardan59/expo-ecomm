@@ -17,6 +17,7 @@ function OrderPage() {
       queryClient.invalidateQueries({queryKey:["orders"]})
       queryClient.invalidateQueries({queryKey:["dashboardStats"]})
     },
+    
   });
 
   const handleStatusChange=(orderId, newStatus)=>{
