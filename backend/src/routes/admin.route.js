@@ -7,6 +7,7 @@ import {
   getDashboardStats,
   updateOrderStatus,
   updateProduct,
+  deleteProduct,
 } from "../controllers/admin.controller.js";
 import { adminOnly, protectRoute } from "../middleware/auth.middleware.js";
 import { upload } from "../middleware/multer.middleware.js";
@@ -32,6 +33,7 @@ router.put(
 
 router.get("/orders", getAllOrders);
 router.patch("/orders/:orderId/status", updateOrderStatus);
+router.delete("/products/:id", deleteProduct);
 
 router.get("/customers", getAllCustomers);
 
