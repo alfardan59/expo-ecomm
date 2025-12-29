@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/alfardan59/expo-ecomm/issues"
   },
-  "homepage": "https://github.com/alfardan59/expo-ecomm#readme"
+  "homepage": "https://github.com/alfardan59/expo-ecomm#readme",
+  "dependencies": {
+    "@tanstack/react-query": "^5.90.13"
+  }
 }
