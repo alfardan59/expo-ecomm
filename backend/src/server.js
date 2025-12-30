@@ -19,11 +19,12 @@ const app = express();
 
 const __dirname = path.resolve();
 
+app.use("/api/inngest", serve({ client: inngest, functions }));
+
 app.use(express.json());
 app.use(clerkMiddleware()); // add auth object under the req=>req.auth
 app.use(cors({origin:ENV.CLIENT_URL, credentials:true}))
 
-app.use("/api/inngest", serve({ client: inngest, functions }));
 
 app.use("/api/admin",adminRoutes);
 app.use("/api/users",userRoutes);
