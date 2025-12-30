@@ -41,7 +41,7 @@ const useCart = () => {
 
 
   return {
-    addToCart: addToCartMutation,
+    addToCart: addToCartMutation.mutate,
     isAddingToCart: addToCartMutation.isPending,
     isUpdating: updateQuantityMutation.isPending,
     isRemoving: removeFromCartMutation.isPending,
