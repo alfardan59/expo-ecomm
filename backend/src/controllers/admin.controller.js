@@ -10,14 +10,15 @@ export async function createProduct(req, res) {
     if (!name || !description || !price || !stock || !category) {
       return res.status(400).json({ message: "All fields are required" });
     }
+
     if (!req.files || req.files.length === 0) {
-      return res
-        .status(400)
-        .json({ message: "At least one image is required" });
+      return res.status(400).json({ message: "At least one image is required" });
     }
+
     if (req.files.length > 3) {
       return res.status(400).json({ message: "Maximum 3 images allowed" });
     }
+
     const uploadPromises = req.files.map((file) => {
       return cloudinary.uploader.upload(file.path, {
         folder: "products",
@@ -25,9 +26,7 @@ export async function createProduct(req, res) {
     });
 
     const uploadResults = await Promise.all(uploadPromises);
-    //secure_url
 
-    //https://img.cloudinary.com/hjjgfjg
     const imageUrls = uploadResults.map((result) => result.secure_url);
 
     const product = await Product.create({
@@ -49,7 +48,7 @@ export async function createProduct(req, res) {
 export async function getAllProducts(_, res) {
   try {
     // -1 means in desc order: most recent products first
-    const products = (await Product.find()).toSorted({ createdAt: -1 });
+    const products = await Product.find().sort({ createdAt: -1 });
     res.status(200).json(products);
   } catch (error) {
     console.error("Error fetching products:", error);
@@ -73,8 +72,7 @@ export async function updateProduct(req, res) {
     if (stock !== undefined) product.stock = parseInt(stock);
     if (category) product.category = category;
 
-    //handle image updates if new images are uploaded
-
+    // handle image updates if new images are uploaded
     if (req.files && req.files.length > 0) {
       if (req.files.length > 3) {
         return res.status(400).json({ message: "Maximum 3 images allowed" });
@@ -98,7 +96,7 @@ export async function updateProduct(req, res) {
   }
 }
 
-export async function getAllOrders(req, res) {
+export async function getAllOrders(_, res) {
   try {
     const orders = await Order.find()
       .populate("user", "name email")
@@ -138,17 +136,15 @@ export async function updateOrderStatus(req, res) {
 
     await order.save();
 
-    res
-      .status(200)
-      .json({ message: "Order status updated successfully", order });
+    res.status(200).json({ message: "Order status updated successfully", order });
   } catch (error) {
     console.error("Error in updateOrderStatus controller:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 }
 
-export async function getAllCustomers (_,res){
-   try {
+export async function getAllCustomers(_, res) {
+  try {
     const customers = await User.find().sort({ createdAt: -1 }); // latest user first
     res.status(200).json({ customers });
   } catch (error) {

@@ -31,7 +31,7 @@ app.use("/api/payment",(req,res,next)=>{
 
 app.use(express.json());
 app.use(clerkMiddleware()); // add auth object under the req=>req.auth
-app.use(cors({origin:ENV.CLIENT_URL, credentials:true}))
+app.use(cors({ origin: ENV.CLIENT_URL, credentials: true }));
 
 app.use("/api/inngest", serve({ client: inngest, functions }));
 
@@ -39,7 +39,7 @@ app.use("/api/admin",adminRoutes);
 app.use("/api/users",userRoutes);
 app.use("/api/orders",orderRoutes);
 app.use("/api/reviews",reviewRoutes);
-app.use("/api/products",productRoutes);
+app.use("/api/products", productRoutes);
 app.use("/api/cart",cartRoutes);
 
 
