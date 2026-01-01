@@ -15,10 +15,19 @@ import orderRoutes from "./routes/order.route.js";
 import reviewRoutes from "./routes/review.route.js";
 import productRoutes from "./routes/product.route.js";
 import cartRoutes from "./routes/cart.route.js";
+import paymentRoutes from "./routes/payment.route.js";
 
 const app = express();
 
 const __dirname = path.resolve();
+
+app.use("/api/payment",(req,res,next)=>{
+  if(req.originalUrl === "/api/payment/webhook"){
+    express.raw({type:"application/json"})(req,res,next)
+  }else{
+    express.json()(req, res, next);
+  }
+},paymentRoutes);
 
 app.use(express.json());
 app.use(clerkMiddleware()); // add auth object under the req=>req.auth
@@ -32,6 +41,9 @@ app.use("/api/orders",orderRoutes);
 app.use("/api/reviews",reviewRoutes);
 app.use("/api/products",productRoutes);
 app.use("/api/cart",cartRoutes);
+
+
+//payment/api/webhook
 
 app.get("/api/health", (req, res) => {
   res.status(200).json({ message: "Success" });
