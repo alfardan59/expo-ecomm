@@ -25,7 +25,7 @@ const addressSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  phoneNumer: {
+  phoneNumber: {
     type: String,
     required: true,
   },
@@ -54,6 +54,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       unique: true,
       required: true,
+    },
+    stripeCustomerId: {
+      type: String,
+      default: "",
     },
     addresses: [addressSchema],
     wishlist: [
