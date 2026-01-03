@@ -23,7 +23,7 @@ router.delete("/addresses/:addressId", protectRoute, deleteAddress);
 //wishlist routes
 
 router.post("/wishlist", addToWishlist);
-router.delete("/wishlist/", getWishlist);
+router.get("/wishlist/", getWishlist);
 router.delete("/wishlist/:productId", removeFromWishlist);
 
 export default router;
